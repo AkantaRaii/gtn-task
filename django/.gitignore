@@ -1,0 +1,75 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# If you have multiple DBs
+*.sqlite3
+
+# Static file directories
+staticfiles/
+static/
+
+# Ignore environment variables
+.env
+.env.*
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.tox/
+.noseids
+.pytest_cache/
+.coverage.*
+.cache
+.junit.xml
+
+# Django migrations (optional to ignore if you want to version them)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+# Uncomment the next line to ignore migrations completely
+# */migrations/
+
+# VS Code settings (optional)
+.vscode/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pyright
+pyrightconfig.json
+
+# Pipenv
+Pipfile.lock
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# JetBrains IDEs
+.idea/
