@@ -1,31 +1,47 @@
 import requests
 from .models import *
 
-def fetch_and_store_breach_data(email):
+def fetch_and_store_breach_data(email, user):
     url = f"https://api.xposedornot.com/v1/breach-analytics?email={email}"
     response = requests.get(url)
     if response.status_code != 200:
         return {"error": "API call failed"}
 
     data = response.json()
-
-    # Use `or {}` to avoid NoneType errors
     breach_metrics = data.get('BreachMetrics') or {}
     risk_list = breach_metrics.get('risk') or [{}]
     risk_info = risk_list[0] if risk_list else {}
-
     pastes_summary = data.get('PastesSummary') or {}
     breaches_summary = data.get('BreachesSummary') or {}
     exposed_breaches = data.get('ExposedBreaches') or {}
 
-    # Create base EmailBreachRecord
-    record = EmailBreachRecord.objects.create(
-        email=email,
-        breach_risk_label=risk_info.get('risk_label'),
-        breach_risk_score=risk_info.get('risk_score'),
-        paste_count=pastes_summary.get('cnt'),
-        last_paste_timestamp=pastes_summary.get('tmpstmp')
-    )
+    # Create or update EmailBreachRecord
+    record, created = EmailBreachRecord.objects.get_or_create(email=email, defaults={"user": user})
+    
+    # If the record already exists, update its fields and delete related data
+    if not created:
+        record.user = user
+        record.breach_risk_label = risk_info.get('risk_label')
+        record.breach_risk_score = risk_info.get('risk_score')
+        record.paste_count = pastes_summary.get('cnt')
+        record.last_paste_timestamp = pastes_summary.get('tmpstmp')
+        record.save()
+
+        # Clear old related data
+        record.breach_summaries.all().delete()
+        record.exposed_breaches.all().delete()
+        record.industries.all().delete()
+        record.password_strengths.all().delete()
+        record.yearly_stats.all().delete()
+        for cat in record.exposed_data.all():
+            cat.items.all().delete()
+        record.exposed_data.all().delete()
+    else:
+        record.breach_risk_label = risk_info.get('risk_label')
+        record.breach_risk_score = risk_info.get('risk_score')
+        record.paste_count = pastes_summary.get('cnt')
+        record.last_paste_timestamp = pastes_summary.get('tmpstmp')
+        record.save()
 
     # Breach Summary
     BreachSummary.objects.create(

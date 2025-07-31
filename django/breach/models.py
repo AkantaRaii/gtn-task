@@ -1,8 +1,9 @@
 from django.db import models
-
+from users.models import User
 
 # Create your models here.
 class EmailBreachRecord(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
     breach_risk_label = models.CharField(max_length=20, null=True, blank=True)
     breach_risk_score = models.IntegerField(null=True, blank=True)

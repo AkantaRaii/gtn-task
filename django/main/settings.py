@@ -14,6 +14,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from decouple import config
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -148,4 +150,4 @@ EMAIL_HOST='smtp.gmail.com'
 EMAIL_USE_TLS=True
 EMAIL_PORT=587
 EMAIL_HOST_USER="yakantaraaii@gmail.com"
-EMAIL_HOST_PASSWORD='apmmqgmwgacrqupv'
+EMAIL_HOST_PASSWORD=config('EMAIL_APP_PW')

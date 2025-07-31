@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { fetchClient } from "@/lib/fetch-client";
 
@@ -9,27 +10,27 @@ export default function DashBoardContent() {
   const [loading, setLoading] = useState(false);
 
   const handleCheck = async () => {
-    console.log("clicked a buttn");
-    if (!email) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-    console.log("aasdfa77");
-
     setLoading(true);
     setError("");
     setBreachData(null);
+
     try {
       const res = await fetchClient(
-        "http://127.0.0.1:8000/api/breach/check-email-breach/",
+        `http://127.0.0.1:8000/api/breach/check-email-breach/?email=${encodeURIComponent(
+          email
+        )}`,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email: email }),
         }
       );
+
+      if (!res.ok) {
+        throw new Error("Server error");
+      }
+
       const data = await res.json();
       setBreachData(data);
     } catch (err) {
@@ -41,10 +42,6 @@ export default function DashBoardContent() {
 
   return (
     <>
-      {/* <NavBar /> */}
-      {/* <main className="min-h-screen bg-gray-100 px-4 sm:px-8 py-10"> */}
-      {/* <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 sm:p-10"> */}
-
       <div className="bg-white p-6 rounded-md shadow-md flex flex-col items-center m-4">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">
           Breach Dashboard
@@ -68,9 +65,10 @@ export default function DashBoardContent() {
         </div>
         {error && <p className="text-red-600 mb-4">{error}</p>}
       </div>
+
       {breachData && (
         <section className="space-y-6">
-          {/* email summary (always show) */}
+          {/* email summary */}
           <div className="bg-white p-6 m-4 rounded-lg shadow-md flex flex-col items-center">
             <h2 className="text-xl font-semibold text-gray-800">
               Email: <span className="text-blue-700">{breachData.email}</span>
@@ -87,14 +85,14 @@ export default function DashBoardContent() {
             </p>
           </div>
 
-          {/* breaches and exposed data (with fallbacks) */}
+          {/* breaches and exposed data */}
           <div className="grid sm:grid-cols-2 gap-2 m-4">
             {/* Exposed Breaches */}
             <div className="bg-white p-6 rounded shadow-md">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 Exposed Breaches
               </h3>
-              {breachData.exposed_breaches.length > 0 ? (
+              {breachData.exposed_breaches?.length > 0 ? (
                 <ul className="list-disc list-inside space-y-3">
                   {breachData.exposed_breaches.map((breach: any) => (
                     <li key={breach.breach}>
@@ -119,7 +117,7 @@ export default function DashBoardContent() {
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 Exposed Data
               </h3>
-              {breachData.exposed_data.length > 0 ? (
+              {breachData.exposed_data?.length > 0 ? (
                 <div className="space-y-4">
                   {breachData.exposed_data.map((cat: any) => (
                     <div key={cat.id}>
@@ -146,9 +144,6 @@ export default function DashBoardContent() {
           </div>
         </section>
       )}
-
-      {/* </div> */}
-      {/* </main> */}
     </>
   );
 }

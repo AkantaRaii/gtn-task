@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import CheckEmailBreachView
+from .views import *
 
 urlpatterns = [
-    path('check-email-breach/', CheckEmailBreachView.as_view(), name='check-email-breach')
+    path('check-email-breach/', CheckEmailBreachView.as_view(), name='check-email-breach'),
+    path('monitoredemail/',MonitoredEmailBreachsView.as_view())
 ]
