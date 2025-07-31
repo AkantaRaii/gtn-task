@@ -38,7 +38,7 @@ export default function InputField() {
           <div className="  w-full flex flex-col py-1 my-3">
             <label htmlFor="email" className="text-sm font-medium text-black">
               {" "}
-              Email*
+              Username*
             </label>
             <input
               id="email"
@@ -47,7 +47,7 @@ export default function InputField() {
               onChange={(e) => setUsername(e.target.value)}
               className=" border border-gray-500 rounded-md w-full shadow-gray-500 h-10 my-1 bg-gray-50 placeholder:px-3 px-3"
               type="text"
-              placeholder="your.email@example.com"
+              placeholder="Enter your username"
             />
           </div>
           <div className="  w-full flex flex-col py-1 my-3">

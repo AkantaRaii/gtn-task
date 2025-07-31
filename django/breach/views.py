@@ -4,8 +4,9 @@ from .utils import fetch_and_store_breach_data
 from .models import EmailBreachRecord
 from .serializers import EmailBreachRecordSerializer
 from rest_framework.permissions import IsAuthenticated
+from users.permissions import IsVerifiedUser
 class CheckEmailBreachView(APIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsVerifiedUser]
     def post(self, request):
         email = request.data.get("email")
         if not email:
