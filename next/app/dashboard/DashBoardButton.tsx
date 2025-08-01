@@ -15,8 +15,8 @@ export default function DashboardButton({
 }: DashBoardProps) {
   return (
     <button
-      className={`flex flex-row items-center w-full  my-2 hover:bg-violet-900 hover:scale-105 transition-transform duration-200 rounded-md px-2 ${
-        active ? "bg-violet-700" : ""
+      className={`flex flex-row items-center w-full  my-2 hover:bg-[#1E2939] hover:scale-105 transition-transform duration-200 rounded-md px-2 ${
+        active ? "bg-[#364153]" : ""
       }`}
       onClick={onClick}
     >

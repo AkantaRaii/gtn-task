@@ -8,26 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsVerifiedUser
 class CheckEmailBreachView(APIView):
     permission_classes=[IsVerifiedUser]
-    def post(self, request):  # this mehtod checks the breaches of the email that user has in monitorlist
-        user=request.user
-        email = request.data.get("email")
-        if not email:
-            return Response({"error": "Email is required"}, status=400)
 
-        # Try to find the record
-        record = EmailBreachRecord.objects.filter(email=email).first()
-
-        if not record:
-            # Fetch and store only if it doesn't already exist
-            fetch_and_store_breach_data(email,user=user)
-            record = EmailBreachRecord.objects.filter(email=email).first()
-
-            if not record:
-                print("keiu xaina")
-                return Response({"Message": "No breach data found for this email."}, status=404)
-
-        serialized = EmailBreachRecordSerializer(record)
-        return Response(serialized.data)
     
     def get(self, request): # yo mehtod le user ko associated email ko breach pahtau xa not other
         user = request.user
@@ -43,7 +24,10 @@ class CheckEmailBreachView(APIView):
             return Response({"Message": "No breach data found for this email."}, status=404)
 
         serialized = EmailBreachRecordSerializer(record)
-        return Response(serialized.data)
+        Yearly_stat_record=YearlyBreachStats.objects.filter(email_record=record)
+        serialized_yearly_stat=YearlyBreachStatsSerializer(Yearly_stat_record,many=True)
+        return Response({'email_record':serialized.data,
+                         'yearly_stat':serialized_yearly_stat.data},status=status.HTTP_200_OK)
 
 
 class MonitoredEmailBreachsView(APIView):

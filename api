@@ -1,0 +1,203 @@
+{
+  "BreachMetrics": {
+    "get_details": [],
+    "industry": [
+      [
+        [
+          "misc",
+          0],
+        [
+          "ente",
+          0],
+        [
+          "heal",
+          0],
+        [
+          "elec",
+          0],
+        [
+          "mini",
+          0],
+        [
+          "musi",
+          0],
+        [
+          "manu",
+          0],
+        [
+          "ener",
+          0],
+        [
+          "news",
+          0],
+        [
+          "hosp",
+          0],
+        [
+          "food",
+          0],
+        [
+          "phar",
+          0],
+        [
+          "educ",
+          0],
+        [
+          "cons",
+          0],
+        [
+          "agri",
+          0],
+        [
+          "tele",
+          0],
+        [
+          "info",
+          1],
+        [
+          "tran",
+          0],
+        [
+          "aero",
+          0],
+        [
+          "fina",
+          0],
+        [
+          "reta",
+          0],
+        [
+          "nonp",
+          0],
+        [
+          "govt",
+          0],
+        [
+          "spor",
+          0],
+        [
+          "envi",
+          0]
+      ]
+    ],
+    "passwords_strength": [
+      {
+        "EasyToCrack": 0,
+        "PlainText": 0,
+        "StrongHash": 0,
+        "Unknown": 1
+      }
+    ],
+    "risk": [
+      {
+        "risk_label": "Low",
+        "risk_score": 36
+      }
+    ],
+    "xposed_data": [
+      {
+        "children": [
+          {
+            "name": "👤 Personal Identification",
+            "children": [
+              {
+                "colname": "level3",
+                "group": "A",
+                "name": "data_Usernames",
+                "value": 1
+              },
+              {
+                "colname": "level3",
+                "group": "A",
+                "name": "data_Names",
+                "value": 1
+              }
+            ],
+            "colname": "level2"
+          },
+          {
+            "name": "📞 Communication and Social Interactions",
+            "children": [
+              {
+                "colname": "level3",
+                "group": "F",
+                "name": "data_Email addresses",
+                "value": 1
+              },
+              {
+                "colname": "level3",
+                "group": "F",
+                "name": "data_Phone numbers",
+                "value": 1
+              }
+            ],
+            "colname": "level2"
+          },
+          {
+            "name": "👥 Demographics",
+            "children": [
+              {
+                "colname": "level3",
+                "group": "I",
+                "name": "data_Geographic locations",
+                "value": 1
+              }
+            ],
+            "colname": "level2"
+          }
+        ]
+      }
+    ],
+    "yearwise_details": [
+      {
+        "y2007": 0,
+        "y2008": 0,
+        "y2009": 0,
+        "y2010": 0,
+        "y2011": 0,
+        "y2012": 0,
+        "y2013": 0,
+        "y2014": 0,
+        "y2015": 0,
+        "y2016": 0,
+        "y2017": 0,
+        "y2018": 0,
+        "y2019": 0,
+        "y2020": 0,
+        "y2021": 2,
+        "y2022": 0,
+        "y2023": 0,
+        "y2024": 0,
+        "y2025": 0
+      }
+    ]
+  },
+  "BreachesSummary": {
+    "site": "Twitter-Scraped"
+  },
+  "ExposedBreaches": {
+    "breaches_details": [
+      {
+        "breach": "Twitter-Scraped",
+        "details": "The \"Twitter Email Addresses Leak\" involves a data leak of over 200 million Twitter user profiles around 2021. The leak includes email addresses, names, screen names, follower counts, and account creation dates. The data was obtained through a Twitter API vulnerability that allowed the input of email addresses and phone numbers to confirm their association with Twitter IDs.",
+        "domain": "twitter.com",
+        "industry": "Information Technology",
+        "logo": "https://xposedornot.com/static/logos/Twitter.png",
+        "password_risk": "unknown",
+        "references": "https://www.bleepingcomputer.com/news/security/200-million-twitter-users-email-addresses-allegedly-leaked-online/",
+        "searchable": "Yes",
+        "verified": "Yes",
+        "xposed_data": "Usernames;Email addresses;Names;Geographic locations;Profile photos;Phone numbers",
+        "xposed_date": "2021",
+        "xposed_records": 208918735
+      }
+    ]
+  },
+  "ExposedPastes": null,
+  "PasteMetrics": null,
+  "PastesSummary": {
+    "cnt": 0,
+    "domain": "",
+    "tmpstmp": ""
+  }
+}
