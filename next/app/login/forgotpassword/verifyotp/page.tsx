@@ -23,18 +23,24 @@ export default function VerifyOTP() {
     const code = otp.join("");
     console.log("Entered OTP:", code);
     console.log(email);
-    const res = await fetch("http://127.0.0.1:8000/api/auth/verify/otp/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        otp: code,
-      }),
-    });
+    const res = await fetch(
+      "http://127.0.0.1:8000/api/auth/verifyotp-resetpassword/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          otp: code,
+        }),
+      }
+    );
+    const data = await res.json();
     if (res.ok) {
-      redirect("/login");
+      sessionStorage.setItem("temp_forgotpass_token", data.temp_token);
+      sessionStorage.setItem("email", email || "");
+      redirect("/login/forgotpassword/changepassword");
     }
   };
   const handleResendOTP = async () => {
@@ -58,9 +64,9 @@ export default function VerifyOTP() {
     <div className=" h-screen flex flex-col justify-center px-[100px]">
       <div className=" flex flex-row justify-center">
         <div>
-          <h1 className="text-2xl font-bold mb-2">Verify your email</h1>
+          <h1 className="text-2xl font-bold mb-2">Verify your OTP</h1>
           <p className="text-textforeground mb-8">
-            You need to verify your email in order to proceed further. We've
+            You need to verify your OTP in order to proceed further. We've
             <br />
             sent a verification code to your email. Please enter it below.
           </p>

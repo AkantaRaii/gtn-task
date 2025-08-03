@@ -1,7 +1,6 @@
 import { fetchServer } from "@/lib/fetch-server";
 import { redirect } from "next/navigation";
 import Body from "./body";
-
 export default async function Temp() {
   let data: any = null;
   try {
@@ -39,9 +38,10 @@ export default async function Temp() {
     console.error("Error fetching breach data:", error);
     // failed ko UI banayera dekhauda hunxa or someting went wrong ko
   }
-  return (
-    <div className="grid sm:grid-cols-12 min-h-screen grid-cols-1">
-      <Body data={data?.email_record} />
-    </div>
-  );
+  return <Body data={data} />;
+}
+{
+  /* <div className="grid sm:grid-cols-12 min-h-screen grid-cols-1">
+ 
+</div>; */
 }

@@ -6,5 +6,8 @@ urlpatterns=[
     path('products/',ProductsView.as_view(),name='products-view'),
     path('me/',Me.as_view(),name='me-view'),
     path('register/',RegisterView.as_view(),name='register'),
-    path('verify/otp/',VerifyOtp.as_view())
+    path('verify/otp/',VerifyOtp.as_view()),
+    path('sendotp/',SendOTP.as_view()),
+    path('verifyotp-resetpassword/',OPTVerifyResetPassword.as_view()),
+    path('reset-password/',ResetPasswordView.as_view()),
 ]   

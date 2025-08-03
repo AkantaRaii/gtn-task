@@ -1,9 +1,11 @@
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils import timezone
+from datetime import timedelta
 from .models import User
 import random
 
-def send_otp_via_email(email):
+def send_otp_via_email(email,expiry_minutes=2):
     print('Reached function')
 
     otp = random.randint(100000, 999999)
@@ -38,6 +40,7 @@ Your Company Team
     try:
         user = User.objects.get(email=email)
         user.otp = otp
+        user.otp_expiry=timezone.now() +timedelta(minutes=expiry_minutes)
         user.save()
         print('OTP saved to user')
         return True
