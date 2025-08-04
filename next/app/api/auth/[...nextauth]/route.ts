@@ -38,7 +38,6 @@ export const authOptions = {
 
           const data = await res.data;
           if (data) {
-            console.log("User authenticated successfully");
             return {
               id: credentials?.username || "unknown",
               username: credentials?.username || "u nknown",
@@ -69,7 +68,6 @@ export const authOptions = {
     }) {
       if (token.accessToken) {
         const decodedToken = jwtDecode(token.accessToken);
-        console.log("Decoded Token:", decodedToken);
         if (decodedToken?.exp !== undefined) {
           token.accessTokenExpires = decodedToken.exp * 1000;
         }

@@ -1,6 +1,6 @@
 import { Shield, Skull, RulerDimensionLine, Eye } from "lucide-react";
-import Card from "../components/card";
-import LineChartComponent from "../components/LineChart";
+import Card from "../../components/card";
+import LineChartComponent from "../../components/LineChart";
 export default function DashBoardContent({ breachData }: any) {
   const emailRecord = breachData?.email_record;
   const yearlyStat = breachData?.yearly_stat;
@@ -8,8 +8,6 @@ export default function DashBoardContent({ breachData }: any) {
     year: item.year,
     count: item.count,
   }));
-  console.log("this is dashbaord component\n");
-  console.log(emailRecord);
   return (
     <>
       {/* heading ho yo */}

@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 export default function page() {
   const [email, setEmail] = useState("");
   const handleProceed = async () => {
-    console.log("button pressed");
     const res = await fetch("http://127.0.0.1:8000/api/auth/sendotp/", {
       method: "POST",
       headers: {

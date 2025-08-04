@@ -60,7 +60,6 @@ export default function InputField() {
       setConfirmPasswordError("Password do not match");
       return;
     }
-    console.log(username + email + password);
     const res = await fetch("http://127.0.0.1:8000/api/auth/register/", {
       method: "POST",
       headers: {

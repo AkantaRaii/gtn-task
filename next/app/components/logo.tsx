@@ -6,7 +6,7 @@ export default function Logo() {
   return (
     <Link href="/">
       <div className="py-2 my-2 ">
-        <img className="w-48" src="./logo_green.webp" alt="Logo" />
+        <img className="w-48" src="/logo_green.webp" alt="Logo" />
       </div>
     </Link>
   );

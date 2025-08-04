@@ -79,7 +79,6 @@ export default function page() {
       alert(data.error || "Failed to reset password");
     }
     // } catch (error) {
-    //   console.error("Error resetting password:", error);
     //   alert("Something went wrong. Please try again.");
     // }
   };

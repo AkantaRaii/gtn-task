@@ -3,27 +3,32 @@ import { LayoutDashboard } from "lucide-react";
 import DashboardButton from "./DashBoardButton";
 import { LayoutDashboardIcon, Bell, Info } from "lucide-react";
 import { useState } from "react";
+import { redirect } from "next/navigation";
 interface SidePaneProps {
   currentOption: string;
   setCurrentOption: (option: string) => void;
 }
-export default function SidePane({
-  currentOption,
-  setCurrentOption,
-}: SidePaneProps) {
+export default function SidePane() {
+  const [currentOption, setCurrentOption] = useState("Dashboard");
   return (
     <div className="p-2">
       <DashboardButton
         Icon={LayoutDashboardIcon}
         text={"Dashboard"}
-        onClick={() => setCurrentOption("Dashboard")}
+        onClick={() => {
+          setCurrentOption("Dashboard");
+          redirect("/application/dashboard");
+        }}
         active={currentOption === "Dashboard"}
       />
       <DashboardButton
         Icon={Bell}
-        text={"Notification Alert"}
-        onClick={() => setCurrentOption("Notification Alert")}
-        active={currentOption === "Notification Alert"}
+        text={"Email Monitoring"}
+        onClick={() => {
+          setCurrentOption("Email Monitoring");
+          redirect("/application/emailmonitor");
+        }}
+        active={currentOption === "Email Monitoring"}
       />
       <DashboardButton
         Icon={Info}

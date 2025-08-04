@@ -10,18 +10,15 @@ export default function InputField() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("Submitting login form", { username, password });
     e.preventDefault();
     const response = await signIn("credentials", {
       redirect: false,
       username,
       password,
-      callbackUrl: "/dashboard",
+      callbackUrl: "/application/dashboard",
     });
-    console.log("Response from signIn:", response);
     if (response?.ok) {
-      console.log("Login successful");
-      router.push("/dashboard");
+      router.push("/application/dashboard");
     } else {
       alert("Login failed. Please check your credentials.");
     }

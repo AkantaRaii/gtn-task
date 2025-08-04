@@ -21,8 +21,6 @@ export default function VerifyOTP() {
   };
   const handleSubmit = async () => {
     const code = otp.join("");
-    console.log("Entered OTP:", code);
-    console.log(email);
     const res = await fetch("http://127.0.0.1:8000/api/auth/verify/otp/", {
       method: "POST",
       headers: {
