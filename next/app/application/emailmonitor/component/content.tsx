@@ -1,8 +1,17 @@
+"use client";
 import Card from "@/app/components/card";
 import { Mail, ShieldAlert, Shield, Trash2 } from "lucide-react";
 import AddEmail from "./AddEmail";
 import EmailList from "./EmailList";
+import { useState } from "react";
 export default function MonioringContent({ data }: any) {
+  const [emails, setEmails] = useState<string[]>(
+    data.MonitoredEmailBreach.map((item: any) => item.email_breach.email)
+  );
+
+  const handleEmailAdded = (newEmail: any) => {
+    setEmails((prev: any) => [...prev, newEmail]);
+  };
   return (
     <div className="p-2 ">
       <h1 className="text-3xl mb-1 font-bold">Email Leaks discovery</h1>
@@ -14,7 +23,7 @@ export default function MonioringContent({ data }: any) {
       <div className=" grid sm:grid-cols-3 grid-cols-1 gap-3 mb-10">
         <Card
           title="Total Monitoring Emails"
-          data={data.noOfMonitoredEmail}
+          data={data.noOfMonitoredEmails}
           icon={Mail}
           color="red-700"
         />
@@ -45,7 +54,7 @@ export default function MonioringContent({ data }: any) {
       </div>
       <div className="grid sm:grid-cols-12 gris-cols-1 gap-3">
         {/* list of email */}
-        <EmailList data={data} />
+        <EmailList data={emails} />
         <div className="col-span-5 w-full bg-white shadow-md rounded-md p-6">
           <h1 className=" text-xl font-bold text-red-700">
             Add Email to Monitor
@@ -53,7 +62,7 @@ export default function MonioringContent({ data }: any) {
           <p className="text-md text-textforeground mb-2">
             List of all emails currently being monitored
           </p>
-          <AddEmail />
+          <AddEmail onEmailAdded={handleEmailAdded} />
         </div>
       </div>
     </div>

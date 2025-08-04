@@ -15,12 +15,12 @@ export default function ({ data }: any) {
         </div>
 
         {/* Body */}
-        {data.MonitoredEmailBreach.map((item: any, idx: number) => (
+        {data.map((item: any, idx: number) => (
           <div
             key={idx}
             className="flex h-12 px-4 items-center border-b-2 border-gray-300  last:border-b-0"
           >
-            <div className="flex-1">{item.email_breach.email}</div>
+            <div className="flex-1">{item}</div>
             <div className="flex-1">
               <div className="rounded-xl bg-green-200 text-green-800 border border-green-400 w-fit px-2">
                 scanned

@@ -1,7 +1,11 @@
 "use client";
 import { fetchClient } from "@/lib/fetch-client";
 import { useState } from "react";
-export default function AddEmail() {
+export default function AddEmail({
+  onEmailAdded,
+}: {
+  onEmailAdded: (email: any) => void;
+}) {
   const [email, setEmail] = useState("");
   const handleAddEmail = async () => {
     const res = await fetchClient(
@@ -20,6 +24,8 @@ export default function AddEmail() {
     if (res.status != 201) {
       alert("field to add email");
     }
+    onEmailAdded(email); // Update parent state
+    setEmail("");
     alert("successfulyy added");
   };
   return (
