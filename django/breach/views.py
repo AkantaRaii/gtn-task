@@ -1,3 +1,4 @@
+from rest_framework.throttling import AnonRateThrottle,UserRateThrottle
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,10 +7,11 @@ from .models import EmailBreachRecord
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsVerifiedUser
+class CustomUserThrottle(UserRateThrottle):
+    rate='20/m'
 class CheckEmailBreachView(APIView):
     permission_classes=[IsVerifiedUser]
 
-    
     def get(self, request): # yo mehtod le user ko associated email ko breach pahtau xa not other
         user = request.user
         email=user.email
@@ -31,6 +33,8 @@ class CheckEmailBreachView(APIView):
 
 
 class MonitoredEmailBreachsView(APIView):
+    permission_classes=[IsVerifiedUser]
+    throttle_classes=[CustomUserThrottle]
     def post(self,request):
         user=request.user
         email = request.data.get("email")
@@ -79,6 +83,7 @@ class MonitoredEmailBreachsView(APIView):
             })
 
         return Response({
+            "noOfMonitoredEmails":len(emails),
             "MonitoredEmailBreach":response
         },status=status.HTTP_200_OK)
 
@@ -99,3 +104,13 @@ class MonitoredEmailBreachsView(APIView):
             },status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
              return Response({'error': 'Something went wrong', 'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+class ThrottleCheck(APIView):
+    def get(self, request):
+        ip=request.META.get('HTTP_X_FORWARDED_FOR')
+        if not ip:
+            ip=request.META.get('REMOTE_ADDR')
+        return Response({'message':'hi'+ip+' from server'})
