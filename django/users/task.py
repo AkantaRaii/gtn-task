@@ -4,7 +4,8 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import User
 import random
-
+from celery import shared_task
+@shared_task
 def send_otp_via_email(email,expiry_minutes=2):
     print('Reached function')
 

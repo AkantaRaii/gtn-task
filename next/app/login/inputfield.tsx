@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Eye, EyeOff } from "lucide-react";
@@ -10,6 +12,7 @@ export default function InputField() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    const loadingToastId = toast.loading("requesting");
     e.preventDefault();
     const response = await signIn("credentials", {
       redirect: false,
@@ -17,10 +20,12 @@ export default function InputField() {
       password,
       callbackUrl: "/application/dashboard",
     });
+    toast.dismiss(loadingToastId);
     if (response?.ok) {
+      toast.success("Login successful");
       router.push("/application/dashboard");
     } else {
-      alert("Login failed. Please check your credentials.");
+      toast.error("Login failed");
     }
   };
 

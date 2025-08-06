@@ -1,6 +1,7 @@
 "use client";
 import { fetchClient } from "@/lib/fetch-client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 export default function AddEmail({
   onEmailAdded,
 }: {
@@ -8,6 +9,7 @@ export default function AddEmail({
 }) {
   const [email, setEmail] = useState("");
   const handleAddEmail = async () => {
+    const toastId = toast.loading("Requesting");
     const res = await fetchClient(
       "http://127.0.0.1:8000/api/breach/monitoredemail/",
       {
@@ -22,11 +24,23 @@ export default function AddEmail({
     );
     const data = await res.json();
     if (res.status != 201) {
-      alert("field to add email");
+      toast.update(toastId, {
+        type: "error",
+        render: "Failed to add email ",
+        isLoading: false,
+        autoClose:4000, 
+        closeOnClick: true,
+      });
     }
     onEmailAdded(email); // Update parent state
     setEmail("");
-    alert("successfulyy added");
+    toast.update(toastId, {
+      type: "success",
+      render: "Email successfully added to monitor ",
+      isLoading: false,
+      autoClose:4000, 
+      closeOnClick: true,
+    });
   };
   return (
     <div>

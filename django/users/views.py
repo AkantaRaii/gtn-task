@@ -7,7 +7,7 @@ from .models import Products
 from .models import  User
 from .serializers import *
 from .permissions import *
-from .emails import send_otp_via_email
+from .task import send_otp_via_email
 from django.utils import timezone
 import jwt
 from datetime import timedelta
@@ -52,7 +52,7 @@ class RegisterView(APIView):
             serializer=UserSerializers(data=data)
             if serializer.is_valid():
                 serializer.save()
-                send_otp_via_email(serializer.data['email'])
+                send_otp_via_email.delay(serializer.data['email'])
                 return Response({
                     'message':'registration successful',
                     'data;':serializer.data
@@ -100,7 +100,7 @@ class SendOTP(APIView):
         try:
             email=request.data.get('email')
             if (User.objects.filter(email=email).exists()):
-                send_otp_via_email(email)
+                send_otp_via_email.delay(email)
                 return Response({
                     'message':'opt successfully sent'
                 },status=status.HTTP_200_OK)

@@ -12,6 +12,11 @@ export default function MonioringContent({ data }: any) {
   const handleEmailAdded = (newEmail: any) => {
     setEmails((prev: any) => [...prev, newEmail]);
   };
+  const handleEmailDelete = (email: string) => {
+    console.log("deleting email:", email);
+    const updatedEmails = emails.filter((e) => e !== email);
+    setEmails(updatedEmails);
+  };
   return (
     <div className="p-2 ">
       <h1 className="text-3xl mb-1 font-bold">Email Leaks discovery</h1>
@@ -54,7 +59,7 @@ export default function MonioringContent({ data }: any) {
       </div>
       <div className="grid sm:grid-cols-12 gris-cols-1 gap-3">
         {/* list of email */}
-        <EmailList data={emails} />
+        <EmailList data={emails} deleteFunc={handleEmailDelete} />
         <div className="col-span-5 w-full bg-white shadow-md rounded-md p-6">
           <h1 className=" text-xl font-bold text-red-700">
             Add Email to Monitor

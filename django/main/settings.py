@@ -159,3 +159,5 @@ EMAIL_USE_TLS=True
 EMAIL_PORT=587
 EMAIL_HOST_USER="yakantaraaii@gmail.com"
 EMAIL_HOST_PASSWORD=config('EMAIL_APP_PW')
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'

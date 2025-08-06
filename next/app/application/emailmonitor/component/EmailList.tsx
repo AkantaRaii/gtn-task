@@ -1,5 +1,12 @@
 import { Trash2 } from "lucide-react";
-export default function ({ data }: any) {
+import DeleteButton from "./deleteButton";
+export default function ({
+  data,
+  deleteFunc,
+}: {
+  data: any;
+  deleteFunc: (email: string) => void;
+}) {
   return (
     <div className="col-span-7 rounded-md shadow-md bg-white p-4">
       <h1 className=" text-xl font-bold">Monitoring Emails</h1>
@@ -27,9 +34,7 @@ export default function ({ data }: any) {
               </div>
             </div>
             <div className="flex-1  pl-6">
-              <button className="text-black hover:bg-red-400 rounded-md p-1">
-                <Trash2 width={20} />
-              </button>
+              <DeleteButton email={item} deleteFunc={deleteFunc} />
             </div>
           </div>
         ))}
