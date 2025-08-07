@@ -2,11 +2,13 @@ from rest_framework.throttling import AnonRateThrottle,UserRateThrottle
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .utils import fetch_and_store_breach_data
+from .utils import *
 from .models import EmailBreachRecord
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsVerifiedUser
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 class CustomUserThrottle(UserRateThrottle):
     rate='20/m'
 class CheckEmailBreachView(APIView):
@@ -114,3 +116,19 @@ class ThrottleCheck(APIView):
         if not ip:
             ip=request.META.get('REMOTE_ADDR')
         return Response({'message':'hi'+ip+' from server'})
+    
+class BreachReportDownloadView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure user is logged in
+
+    def get(self, request):
+        user = request.user
+        email_record = EmailBreachRecord.objects.filter(user=user).first()
+
+        buffer = create_breach_report_pdf(user, email_record)
+
+        response = HttpResponse(
+            buffer.read(),
+            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        )
+        response['Content-Disposition'] = f'attachment; filename="report_{user.username}.docx"'
+        return response

@@ -1,6 +1,15 @@
 import requests
 from .models import *
-
+from docx import Document
+import tempfile
+from io import BytesIO
+import os
+import uuid
+from docx2pdf import convert
+from io import BytesIO
+import pythoncom
+from .serializers import *
+import datetime
 def fetch_and_store_breach_data(email, user):
     url = f"https://api.xposedornot.com/v1/breach-analytics?email={email}"
     response = requests.get(url)
@@ -132,3 +141,78 @@ def fetch_and_store_breach_data(email, user):
                 print(f"Error creating ExposedDataCategory: {e}")
 
     return {"success": True, "email": record.email}
+
+
+# breach/utils.py
+
+
+
+def create_breach_report_pdf(user, email_record):
+    x=datetime.datetime.now()
+    exposed_data=[]
+    try:
+        for i in email_record.exposed_data.all():
+            exposed_data.append(i['level2_name'])
+    except:
+        exposed_data.append('NO leaks found')
+    # Initialize COM for this thread (Windows only)
+    pythoncom.CoInitialize()
+
+    try:
+        # Create temp folder
+        with tempfile.TemporaryDirectory() as tmpdir:
+            docx_path = os.path.join(tmpdir, f"{uuid.uuid4()}.docx")
+            pdf_path = docx_path.replace(".docx", ".pdf")
+
+            # 1. Create .docx file
+            doc = Document()
+            doc.add_heading('Dark Web Monitoring Report', 0)
+
+            doc.add_paragraph(f'Application User: {user.username}')
+            doc.add_paragraph(f'Report Generated: {x.year} {x.strftime("%B")} {x.day}')
+            doc.add_paragraph(f'Email : {user.email}')
+            doc.add_paragraph(f'Risk Score: {email_record.breach_risk_score} ({email_record.breach_risk_label})')
+            doc.add_paragraph(f'Paste Count: {email_record.paste_count}')
+            doc.add_paragraph(f'Last Paste Timestamp: {email_record.last_paste_timestamp}')
+            
+           
+
+            doc.add_heading('Exposed Data', level=1)
+            for i in email_record.exposed_data.all():
+                doc.add_paragraph(f'    : {i.level2_name}')
+    
+
+            doc.add_heading('Exposed Breaches', level=1)
+            try:
+                for exposed_breach in email_record.exposed_breaches.all():
+                    doc.add_paragraph(f'Breach: {exposed_breach.breach}')
+                    doc.add_paragraph(f'Domain: {exposed_breach.domain}')
+                    doc.add_paragraph(f'Industry: {exposed_breach.industry}')
+                    doc.add_paragraph(f'details:{exposed_breach.details}')
+                
+            except:
+                doc.add_paragraph(f'*No breach found')
+
+
+            doc.add_heading('Security Recommendations', level=0)
+            for r in [
+                "Change compromised passwords immediately.",
+                "Enable two-factor authentication.",
+                "Use a password manager.",
+                "Monitor financial accounts for unusual activity.",
+                "Be alert to phishing attempts."
+            ]:
+                doc.add_paragraph(f'• {r}')
+
+            doc.save(docx_path)
+
+            # 2. Convert to PDF
+            convert(docx_path, pdf_path)
+
+            # 3. Read PDF to memory
+            with open(pdf_path, "rb") as f:
+                pdf_buffer = BytesIO(f.read())
+
+        return pdf_buffer
+    finally:
+        pythoncom.CoUninitialize()  # Clean up COM
