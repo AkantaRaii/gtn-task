@@ -48,7 +48,7 @@ export function NavBar() {
           <p className=" ">DNS Scan</p>
           <ArrowRight className=" w-4 h-4 " />
         </button>
-        <Link href="/dashboard">
+        <Link href="/application/dashboard">
           <button className="bg-[#72b823] border-[#72b823] border-2 rounded-full flex flex-row items-center px-6 py-2.5 my-4 gap-2 text-white hover:bg-lime-200 hover:text-[#72b823]">
             <Rocket className=" w-4 h-4 " />
             <p className=" ">Get Started</p>

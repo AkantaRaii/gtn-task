@@ -18,14 +18,16 @@ export default function MonioringContent({ data }: any) {
     setEmails(updatedEmails);
   };
   return (
-    <div className="p-2 ">
-      <h1 className="text-3xl mb-1 font-bold">Email Leaks discovery</h1>
-      <p className="text-md text-textforeground mb-4">
+    <div className="p-2 mt-14 ">
+      <h1 className="text-4xl font-bold text-gray-800">
+        Email Leaks discovery
+      </h1>
+      <p className="text-lg text-textforeground mb-4">
         Monitor your emails for potential data breaches and leaks
       </p>
 
       {/* first ko 3 ota batta */}
-      <div className=" grid sm:grid-cols-3 grid-cols-1 gap-3 mb-10">
+      <div className=" grid sm:grid-cols-3 grid-cols-1 gap-3 mb-3">
         <Card
           title="Total Monitoring Emails"
           data={data.noOfMonitoredEmails}

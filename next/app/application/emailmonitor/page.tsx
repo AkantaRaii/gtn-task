@@ -16,7 +16,7 @@ export default async function page() {
   }
   const data = await res.json();
 
-  return <div className="pt-[60px]">
+  return <div>
     <MonioringContent data={data}/>
   </div>;
 }

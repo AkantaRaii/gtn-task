@@ -13,6 +13,8 @@ import jwt
 from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 
 # Create your views here.
@@ -171,3 +173,9 @@ class ResetPasswordView(APIView):
         user.save()
 
         return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
+    
+# your_app/views.py
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

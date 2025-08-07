@@ -11,7 +11,7 @@ export default function DashBoardContent({ breachData }: any) {
   return (
     <>
       {/* heading ho yo */}
-      <div className=" min-h-[120px] m-4 mt-20  p-2">
+      <div className=" min-h-[120px] mt-14  p-2">
         <h1 className="text-4xl font-bold text-gray-800">Breach Dashboard</h1>
         <p className="text-lg text-muted text-textforeground">
           A quick Overview of breaches.

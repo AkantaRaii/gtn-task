@@ -36,11 +36,12 @@ export const authOptions = {
             password: credentials?.password,
           });
 
-          const data = await res.data;
+          const data = res.data;
           if (data) {
             return {
-              id: credentials?.username || "unknown",
-              username: credentials?.username || "u nknown",
+              id: data.user.id,
+              username: data.user.username,
+              email: data.user.email,
               accessToken: data.access,
               refreshToken: data.refresh,
             };
@@ -77,17 +78,23 @@ export const authOptions = {
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
+          username: user.username,
+          id: user.id,
+          email: user.email,
         };
       }
       if (Date.now() < token.accessTokenExpires) {
         return token;
       }
-      return refreshToken(token); 
+      return refreshToken(token);
     },
     async session({ session, token }: { session: any; token: any }) {
       if (token) {
         session.accessToken = token.accessToken || "";
         session.refreshToken = token.refreshToken || "";
+        session.username = token.username;
+        session.id = token.id;
+        session.email = token.email;
       }
       return session;
     },

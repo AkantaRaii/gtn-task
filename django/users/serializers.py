@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model=User
@@ -23,3 +25,28 @@ class ForgotPasswordSerializer(serializers.Serializer):
 class ResetPasswordSerializer(serializers.Serializer):
     temp_token = serializers.CharField()
     new_password = serializers.CharField(write_only=True, min_length=8)
+# your_app/serializers.py
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['email'] = user.email
+        token['username'] = user.username
+
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # Optional: Add more user info to the response
+        data['user'] = {
+            'id': self.user.id,
+            'email': self.user.email,
+            'username': self.user.username,
+        }
+
+        return data
