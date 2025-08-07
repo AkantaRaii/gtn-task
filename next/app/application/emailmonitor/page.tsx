@@ -16,7 +16,9 @@ export default async function page() {
   }
   const data = await res.json();
 
-  return <div>
-    <MonioringContent data={data}/>
-  </div>;
+  return (
+    <div>
+      <MonioringContent data={data} />
+    </div>
+  );
 }

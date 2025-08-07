@@ -14,7 +14,7 @@ export function DashBoardNavBar({ toggle }: { toggle: any }) {
   const [logoutModal, setLogoutModal] = useState(false);
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getSession();
+      const session: any = await getSession();
       console.log("asdfasdf", session.email);
       if (session?.email) {
         setEmail(session.email);

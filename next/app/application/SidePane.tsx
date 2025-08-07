@@ -1,7 +1,7 @@
 "use client";
 import { LayoutDashboard } from "lucide-react";
 import DashboardButton from "./DashBoardButton";
-import { LayoutDashboardIcon, Bell, Info } from "lucide-react";
+import { LayoutDashboardIcon, Bell, Info,FileText } from "lucide-react";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 interface SidePaneProps {
@@ -35,6 +35,15 @@ export default function SidePane() {
         text={"Threat Intelligence"}
         onClick={() => setCurrentOption("Threat Intelligence")}
         active={currentOption === "Threat Intelligence"}
+      />
+      <DashboardButton
+        Icon={FileText}
+        text={"Report"}
+        onClick={() => {
+          setCurrentOption("Report");
+          redirect("/application/report");
+        }}
+        active={currentOption === "Report"}
       />
     </div>
   );
